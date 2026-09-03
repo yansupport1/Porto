@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Portfolio Yanz"
+description = "A premium personal portfolio for Yanz, a developer and prompt engineer showcasing five APK projects, personal profile, skills, and contact channels."
+version = "1.0.0"
+id = "artifacts/yanz-portfolio"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 23998
+
+[services.development]
+run = "pnpm --filter @workspace/yanz-portfolio run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/yanz-portfolio", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/yanz-portfolio/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "23998"
+BASE_PATH = "/"
